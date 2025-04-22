@@ -1,25 +1,37 @@
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../Loader";
 
 const Earth = () => {
-  // Error state to capture loading issues
-  const [hasError, setHasError] = useState(false);
+  const { scene, errors } = useGLTF("./models/desktop_pc_mobile/scene.gltf");
 
-  const earth = useGLTF("./models/desktop_pc_mobile/scene.gltf", (state) => {
-    // Check for errors in the loading process
-    if (state.errors.length > 0) {
-      console.error("GLTF model loading errors:", state.errors);
-      setHasError(true); // Set error state to true if there are loading issues
-    }
-  });
-
-  if (hasError) {
-    return <div>Error loading model</div>; // Display an error message
+  // Log errors if the model fails to load
+  if (errors && errors.length > 0) {
+    console.error("GLTF Model loading errors:", errors);
   }
 
-  return <primitive key="earth" object={earth.scene} scale={2.5} position-y={0} rotation-y={0} />;
+  useEffect(() => {
+    if (scene) {
+      // Traverse through all geometries and sanitize NaN values
+      scene.traverse((child) => {
+        if (child.isMesh && child.geometry) {
+          const position = child.geometry.attributes.position;
+          if (position) {
+            for (let i = 0; i < position.count; i++) {
+              if (isNaN(position.getX(i))) position.setX(i, 0);
+              if (isNaN(position.getY(i))) position.setY(i, 0);
+              if (isNaN(position.getZ(i))) position.setZ(i, 0);
+            }
+            // Mark geometry as needing an update
+            child.geometry.attributes.position.needsUpdate = true;
+          }
+        }
+      });
+    }
+  }, [scene]);
+
+  return <primitive key="earth" object={scene} scale={2.5} position-y={0} rotation-y={0} />;
 };
 
 const EarthCanvas = () => {
