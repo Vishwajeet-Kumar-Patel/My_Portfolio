@@ -1,6 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { useInView } from "react-intersection-observer";
 import { styles } from "../style";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
@@ -16,6 +17,12 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const { ref: canvasRef, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [showCanvas, setShowCanvas] = useState(false);
+
+  useEffect(() => {
+    if (inView) setShowCanvas(true);
+  }, [inView]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,11 +50,7 @@ const Contact = () => {
         () => {
           setLoading(false);
           alert("Thank you. I will get back to you as soon as possible.");
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
+          setForm({ name: "", email: "", message: "" });
         },
         (error) => {
           setLoading(false);
@@ -112,7 +115,6 @@ const Contact = () => {
           </button>
         </form>
 
-        {/* Social Links */}
         <div className="mt-10 flex justify-center gap-6">
           <a
             href="https://www.instagram.com/vishwajeet_kumar_patel/"
@@ -142,10 +144,11 @@ const Contact = () => {
       </motion.div>
 
       <motion.div
+        ref={canvasRef}
         variants={slideIn("right", "tween", 0.2, 1)}
         className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
       >
-        <EarthCanvas />
+        {showCanvas && <EarthCanvas />}
       </motion.div>
     </div>
   );
