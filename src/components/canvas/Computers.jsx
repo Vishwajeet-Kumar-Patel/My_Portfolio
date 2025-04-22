@@ -32,8 +32,8 @@ const Computers = ({ isMobile }) => {
       <pointLight intensity={40} />
       <primitive
         object={scene}
-        scale={isMobile ? 0.7 : 0.75}
-        position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
+        scale={isMobile ? 0.5 : 0.75} // Adjust scale for mobile
+        position={isMobile ? [0, -3, -1.8] : [0, -3.25, -1.5]} // Adjust position for mobile
         rotation={[-0.01, -0.2, -0.1]}
       />
     </mesh>
@@ -63,7 +63,10 @@ const ComputersCanvas = () => {
       frameloop="demand"
       shadows
       dpr={isMobile ? [1, 1.5] : [1, 2]}  // Adjust resolution based on mobile
-      camera={{ position: [20, 3, 5], fov: 25 }}
+      camera={{
+        position: isMobile ? [5, 2, 5] : [20, 3, 5], // Adjust camera position for mobile
+        fov: isMobile ? 45 : 25, // Adjust FOV for mobile
+      }}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader />}>

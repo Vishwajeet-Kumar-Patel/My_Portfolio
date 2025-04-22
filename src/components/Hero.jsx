@@ -30,14 +30,24 @@ const Hero = () => {
             Hi, I'm <span className="text-[#915eff]">Vishwajeet</span>
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100`}>
-            I develop Full Stack Web Applications 
+            I develop Full Stack Web Applications
             & Machine Learning Models
             <br className="sm:block hidden" />
           </p>
         </div>
       </div>
 
-      {showCanvas && <ComputersCanvas />}
+      {/* ComputersCanvas will appear only when in view */}
+      {showCanvas && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute inset-0 w-full h-full flex justify-center items-center"
+        >
+          <ComputersCanvas />
+        </motion.div>
+      )}
 
       <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
         <a href="#about">
