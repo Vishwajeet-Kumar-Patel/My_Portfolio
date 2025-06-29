@@ -36,7 +36,6 @@ const Hero = () => {
           transition={{ duration: 1 }}
         >
           <h1 className="text-white text-[48px] sm:text-[64px] font-bold leading-tight">
-            <br></br>
             Hello, I'm{" "}
             <span className="text-[#915eff] drop-shadow-lg">
               Vishwajeet Kumar
