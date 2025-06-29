@@ -6,7 +6,7 @@ import { ComputersCanvas } from "./canvas";
 
 const Hero = () => {
   const { ref, inView } = useInView({
-    triggerOnce: true, // Load only once when in view
+    triggerOnce: true,
     threshold: 0.2,
   });
 
@@ -17,27 +17,39 @@ const Hero = () => {
   }, [inView]);
 
   return (
-    <section ref={ref} className="relative w-full h-screen mx-auto">
+    <section
+      ref={ref}
+      className="relative w-full h-screen mx-auto bg-gradient-to-b from-black via-[#0f0f1f] to-black"
+    >
+      {/* Text Content */}
       <div
-        className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5`}
+        className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-col sm:flex-row items-start gap-5`}
       >
         <div className="flex flex-col justify-center items-center mt-5">
           <div className="w-5 h-5 rounded-full bg-[#915eff]" />
           <div className="w-1 sm:h-80 h-40 violet-gradient" />
         </div>
-        <div>
-          <h1 className={`${styles.heroHeadText} text-white`}>
-            Hi, I'm <span className="text-[#915eff]">Vishwajeet</span>
+
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-white text-[48px] sm:text-[64px] font-bold leading-tight">
+            <br></br>
+            Hello, I'm{" "}
+            <span className="text-[#915eff] drop-shadow-lg">
+              Vishwajeet Kumar
+            </span>
           </h1>
-          <p className={`${styles.heroSubText} mt-2 text-white-100`}>
-            I develop Full Stack Web Applications
-            & Machine Learning Models
-            <br className="sm:block hidden" />
+          <p className="mt-4 text-white-100 text-[18px] sm:text-[20px] leading-relaxed max-w-xl">
+            I design & build modern full stack web applications and craft smart
+            machine learning solutions that solve real-world problems.
           </p>
-        </div>
+        </motion.div>
       </div>
 
-      {/* ComputersCanvas will appear only when in view */}
+      {/* 3D Robot Canvas */}
       {showCanvas && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -49,6 +61,7 @@ const Hero = () => {
         </motion.div>
       )}
 
+      {/* Scroll Indicator */}
       <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
         <a href="#about">
           <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">

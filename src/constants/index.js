@@ -151,19 +151,19 @@ const experiences = [
     ],
   },
   {
-    title: "Machine Learning Intern",
-    company_name: "Code alpha",
-    icon: work,
-    iconBg: "#E6DEDD",
-    date: "March 2025 - Ongoing",
-    points: [
-      "Built and deployed end-to-end machine learning models using Python, Scikit-learn, and TensorFlow, improving prediction accuracy by 25% through feature engineering and hyperparameter tuning",
-    "Designed automated data preprocessing pipelines, reducing manual effort by 50% and accelerating model training cycles",
-    "Integrated ML models into full-stack applications via REST APIs, enabling real-time predictions and enhancing user experience",
-    "Optimized model performance using evaluation metrics like precision, recall, and F1-score, ensuring robustness across multiple datasets",
-    "Created dynamic visualizations and dashboards using Matplotlib and Seaborn to communicate key insights and model performance to non-technical stakeholders",
-    ],
-  },
+  title: "Cyber Security Intern",
+  company_name: "CybarGyan, C-DAC Noida",
+  icon: work,
+  iconBg: "#E6DEDD",
+  date: "19th May 2025 - 30th June 2025",
+  points: [
+    "Completed a 6-week intensive internship focused on cyber security tools, practices, and network defense mechanisms under the guidance of C-DAC Noida experts.",
+    "Gained hands-on experience with tools such as Wireshark, Nmap, Burp Suite, and Metasploit for vulnerability scanning and network analysis.",
+    "Learned secure coding practices and performed penetration testing on web applications to identify and patch security flaws.",
+    "Implemented firewall rules, intrusion detection systems, and log analysis to monitor and secure network traffic.",
+    "Prepared a detailed project report and gave a final presentation highlighting security solutions and mitigation strategies implemented during the internship."
+  ],
+}
 ];
 
 const testimonials = [

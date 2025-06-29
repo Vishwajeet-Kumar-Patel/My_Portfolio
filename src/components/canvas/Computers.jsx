@@ -3,22 +3,20 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../Loader";
 
-const Computers = ({ isMobile }) => {
-  const { scene, errors } = useGLTF(isMobile ? "./models/desktop_pc_mobile/scene.gltf" : "./models/desktop_pc/scene.gltf");
+const DeveloperModel = ({ isMobile }) => {
+  const { scene } = useGLTF("https://modelviewer.dev/shared-assets/models/RobotExpressive.glb");
+  
 
-  // Log errors if the model fails to load
-  if (errors && errors.length > 0) {
-    console.error("GLTF Model loading errors:", errors);
-  }
+  useEffect(() => {
+    if (!scene) {
+      console.warn("Scene not loaded properly.");
+    }
+  }, [scene]);
 
-  // Check if scene is available, else return a fallback message
-  if (!scene) {
-    console.error("Failed to load GLTF model: No scene data available.");
-    return null;
-  }
+  if (!scene) return null;
 
   return (
-    <mesh>
+    <>
       <hemisphereLight intensity={0.15} groundColor="black" />
       <ambientLight intensity={0.3} />
       <spotLight
@@ -29,14 +27,23 @@ const Computers = ({ isMobile }) => {
         castShadow
         shadow-mapSize={1024}
       />
-      <pointLight intensity={40} />
+      <pointLight intensity={1} />
       <primitive
         object={scene}
-        scale={isMobile ? 0.5 : 0.75} // Adjust scale for mobile
-        position={isMobile ? [0, -3, -1.8] : [0, -3.25, -1.5]} // Adjust position for mobile
-        rotation={[-0.01, -0.2, -0.1]}
+        scale={isMobile ? 0.25 : 0.3}
+        position={isMobile ? [0, -1.4, 0] : [0, -1.5, 0]} // Moved slightly up
+        rotation={[0, Math.PI, 0]} // 180° Y-axis
       />
-    </mesh>
+
+
+      <OrbitControls
+        enableZoom={false}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 2}
+      />
+      
+      
+    </>
   );
 };
 
@@ -46,38 +53,27 @@ const ComputersCanvas = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 500px)");
     setIsMobile(mediaQuery.matches);
-
-    const handleMediaQueryChange = (event) => {
-      setIsMobile(event.matches);
-    };
-
+    const handleMediaQueryChange = (event) => setIsMobile(event.matches);
     mediaQuery.addEventListener("change", handleMediaQueryChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
-    };
+    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
   }, []);
 
   return (
     <Canvas
-      frameloop="demand"
-      shadows
-      dpr={isMobile ? [1, 1.5] : [1, 2]}  // Adjust resolution based on mobile
-      camera={{
-        position: isMobile ? [5, 2, 5] : [20, 3, 5], // Adjust camera position for mobile
-        fov: isMobile ? 45 : 25, // Adjust FOV for mobile
-      }}
-      gl={{ preserveDrawingBuffer: true }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls
-          enableZoom={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-        />
-        <Computers isMobile={isMobile} />
-      </Suspense>
+  frameloop="demand"
+  shadows
+  dpr={isMobile ? [1, 1.0] : [1, 1.5]}
+  camera={{
+  position: isMobile ? [0, 1.2, 5.5] : [0, 1.6, 6.5],
+  fov: 35,
+}}
 
+  gl={{ preserveDrawingBuffer: true }}
+>
+      <Suspense fallback={<CanvasLoader />}>
+        <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
+        <DeveloperModel isMobile={isMobile} />
+      </Suspense>
       <Preload all />
     </Canvas>
   );
