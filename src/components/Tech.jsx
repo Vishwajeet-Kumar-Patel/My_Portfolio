@@ -6,7 +6,7 @@ import { technologies } from "../constants";
 
 const Tech = () => {
   return (
-    <div className="flex flex-row flex-wrap justify-center gap-10">
+    <div className="flex flex-row flex-wrap justify-center gap-4 xs:gap-6 sm:gap-8 md:gap-10">
       {technologies.map((technology, index) => (
         <LazyBallCanvas key={technology.name} icon={technology.icon} />
       ))}
@@ -23,7 +23,7 @@ const LazyBallCanvas = ({ icon }) => {
   }, [inView]);
 
   return (
-    <div ref={ref} className="w-28 h-28">
+    <div ref={ref} className="w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28">
       {showCanvas && <BallCanvas icon={icon} />}
     </div>
   );

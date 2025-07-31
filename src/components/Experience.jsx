@@ -12,7 +12,13 @@ import { textVariant } from "../utils/motion";
 const ExperienceCard = ({ experience }) => {
   return (
     <VerticalTimelineElement
-      contentStyle={{ background: "#1d1836", color: "#fff" }}
+      contentStyle={{ 
+        background: "#1d1836", 
+        color: "#fff",
+        borderRadius: "16px",
+        padding: "16px",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)"
+      }}
       contentArrowStyle={{ borderRight: "7px solid #232631" }}
       date={experience.date}
       iconStyle={{ background: experience.iconBg }}
@@ -27,19 +33,19 @@ const ExperienceCard = ({ experience }) => {
       }
     >
       <div>
-        <h3 className="text-white text-[24px] font-bold">{experience.title}</h3>
+        <h3 className="text-white text-[20px] xs:text-[22px] sm:text-[24px] font-bold leading-tight">{experience.title}</h3>
         <p
-          className="text-secondary text-[16px] font-semibold"
+          className="text-secondary text-[14px] xs:text-[15px] sm:text-[16px] font-semibold mt-1"
           style={{ margin: 0 }}
         >
           {experience.company_name}
         </p>
       </div>
-      <ul className="mt-5 list-disc ml-5 space-y-2">
+      <ul className="mt-4 xs:mt-5 list-disc ml-4 xs:ml-5 space-y-1.5 xs:space-y-2">
         {experience.points.map((point, index) => (
           <li
             key={`experience-point-${index}`}
-            className="text-white-100 text-[14px] pl-1 tracking-wider"
+            className="text-white-100 text-[13px] xs:text-[14px] pl-1 tracking-wider leading-relaxed"
           >
             {point}
           </li>
@@ -48,6 +54,7 @@ const ExperienceCard = ({ experience }) => {
     </VerticalTimelineElement>
   );
 };
+
 const Experience = () => {
   return (
     <>
@@ -55,7 +62,7 @@ const Experience = () => {
         <p className={styles.sectionSubText}>What I have done so far</p>
         <h2 className={styles.sectionHeadText}>Work Experience</h2>
       </motion.div>
-      <div className="mt-20 flex flex-col">
+      <div className="mt-12 xs:mt-16 sm:mt-20 flex flex-col">
         <VerticalTimeline>
           {experiences.map((experience, index) => (
             <ExperienceCard key={index} experience={experience} />

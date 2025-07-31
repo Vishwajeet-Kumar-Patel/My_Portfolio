@@ -8,17 +8,17 @@ import { SectionWrapper } from "../hoc";
 
 const ServiceCard = ({ index, title, icon }) => {
   return (
-    <Tilt className="xs:w-[250px] w-full">
+    <Tilt className="w-full xs:w-[280px] sm:w-[320px] md:w-[250px]">
       <motion.div
         variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
         className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
       >
         <div
           options={{ max: 45, scale: 1, speed: 450 }}
-          className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
+          className="bg-tertiary rounded-[20px] py-4 xs:py-5 px-8 xs:px-12 min-h-[240px] xs:min-h-[280px] flex justify-evenly items-center flex-col"
         >
-          <img src={icon} alt={title} className="w-16 h-16 object-contain" />
-          <h3 className="text-white text-[20px] font-bold text-center">
+          <img src={icon} alt={title} className="w-12 h-12 xs:w-16 xs:h-16 object-contain" />
+          <h3 className="text-white text-[18px] xs:text-[20px] font-bold text-center leading-tight">
             {title}
           </h3>
         </div>
@@ -35,13 +35,13 @@ const About = () => {
       </motion.div>
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
+        className="mt-3 xs:mt-4 text-secondary text-[15px] xs:text-[16px] sm:text-[17px] max-w-full sm:max-w-3xl leading-[24px] xs:leading-[28px] sm:leading-[30px]"
       >
-        Hi! I'm a self-driven undergraduate student with a strong passion for full-stack development, AI/ML, and game development. I work extensively with the MERN stack and Spring Boot, and I’ve built projects like TrackWell (a fitness tracker), KrishiConnect (an agri-tech platform), and an AI Code Auto-Completion tool.
-I’m also exploring game development using Unity and C#, while staying curious about emerging technologies like Generative AI, Quantum Machine Learning, Swarm Intelligence, and Edge AI.
-I love building meaningful, scalable tech products and constantly push myself to learn, create, and innovate.
+        Hi! I'm a self-driven undergraduate student with a strong passion for full-stack development, AI/ML, and game development. I work extensively with the MERN stack and Spring Boot, and I've built projects like TrackWell (a fitness tracker), KrishiConnect (an agri-tech platform), and an AI Code Auto-Completion tool.
+        I'm also exploring game development using Unity and C#, while staying curious about emerging technologies like Generative AI, Quantum Machine Learning, Swarm Intelligence, and Edge AI.
+        I love building meaningful, scalable tech products and constantly push myself to learn, create, and innovate.
       </motion.p>
-      <div className="mt-20 flex flex-wrap gap-10">
+      <div className="mt-12 xs:mt-16 sm:mt-20 flex flex-wrap justify-center gap-6 xs:gap-8 sm:gap-10">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}

@@ -13,108 +13,92 @@
   color-scheme: dark;
 }
 
+/* Mobile-first responsive font sizing */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 450px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #050816;
+}
+
+/* Responsive hash-span for mobile */
 .hash-span {
-  margin-top: -100px;
-  padding-bottom: 100px;
+  margin-top: -80px;
+  padding-bottom: 80px;
   display: block;
 }
 
+@media (min-width: 640px) {
+  .hash-span {
+    margin-top: -100px;
+    padding-bottom: 100px;
+  }
+}
+
+/* Enhanced gradients with better mobile performance */
 .black-gradient {
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #000000;
+  background: linear-gradient(135deg, #434343 0%, #000000 100%);
 }
 
 .violet-gradient {
   background: #804dee;
   background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
-  background: -webkit-linear-gradient(
-    -90deg,
-    #804dee 0%,
-    rgba(60, 51, 80, 0) 100%
-  );
 }
 
 .green-pink-gradient {
-  background: "#00cea8";
+  background: #00cea8;
   background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
 }
 
+/* Improved text gradients with better mobile compatibility */
 .orange-text-gradient {
-  background: #f12711; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #f12711,
-    #f5af19
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #f12711,
-    #f5af19
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to top, #f12711, #f5af19);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .green-text-gradient {
-  background: #11998e; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #11998e,
-    #38ef7d
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #11998e,
-    #38ef7d
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to top, #11998e, #38ef7d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .blue-text-gradient {
-  /* background: -webkit-linear-gradient(#eee, #333); */
-  background: #56ccf2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #2f80ed,
-    #56ccf2
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #2f80ed,
-    #56ccf2
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to top, #2f80ed, #56ccf2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .pink-text-gradient {
-  background: #ec008c; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #ec008c,
-    #fc6767
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #ec008c,
-    #fc6767
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to top, #ec008c, #fc6767);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
-/* canvas- styles */
+/* Enhanced canvas loader for better mobile performance */
 .canvas-loader {
   font-size: 10px;
   width: 1em;
@@ -127,8 +111,7 @@
 }
 
 @keyframes mulShdSpin {
-  0%,
-  100% {
+  0%, 100% {
     box-shadow: 0em -2.6em 0em 0em #ffffff,
       1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
       2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
@@ -200,5 +183,149 @@
       0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.5),
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0em #ffffff;
+  }
+}
+
+/* Mobile-responsive utilities */
+@layer utilities {
+  .text-responsive-xl {
+    @apply text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  .text-responsive-lg {
+    @apply text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+  
+  .text-responsive-md {
+    @apply text-lg xs:text-xl sm:text-2xl md:text-3xl;
+  }
+  
+  .text-responsive-sm {
+    @apply text-base xs:text-lg sm:text-xl;
+  }
+  
+  .padding-responsive {
+    @apply px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16;
+  }
+  
+  .margin-responsive-y {
+    @apply my-4 xs:my-6 sm:my-8 md:my-12 lg:my-16;
+  }
+  
+  .grid-responsive {
+    @apply grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+  
+  .flex-responsive {
+    @apply flex flex-col xs:flex-col sm:flex-row;
+  }
+}
+
+/* Enhanced mobile navigation */
+.mobile-menu {
+  @apply transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-menu.open {
+  @apply translate-x-0;
+}
+
+.mobile-menu.closed {
+  @apply translate-x-full;
+}
+
+/* Better mobile card layouts */
+.mobile-card {
+  @apply w-full xs:w-full sm:w-[300px] md:w-[350px] lg:w-[400px];
+}
+
+/* Mobile-optimized 3D canvas containers */
+.canvas-container {
+  @apply w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px];
+}
+
+.canvas-container-small {
+  @apply w-16 h-16 xs:w-20 xs:h-20 sm:w-24 sm:h-24 md:w-28 md:h-28;
+}
+
+/* Enhanced button styles for mobile */
+.btn-primary {
+  @apply px-4 py-2 xs:px-6 xs:py-3 sm:px-8 sm:py-4 rounded-lg font-medium transition-all duration-300;
+}
+
+.btn-secondary {
+  @apply px-3 py-2 xs:px-4 xs:py-2 sm:px-6 sm:py-3 rounded-md font-medium transition-all duration-300;
+}
+
+/* Mobile-optimized spacing */
+.section-padding {
+  @apply py-8 xs:py-12 sm:py-16 md:py-20 lg:py-24;
+}
+
+.container-padding {
+  @apply px-4 xs:px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20;
+}
+
+/* Mobile-friendly hover effects */
+@media (hover: hover) {
+  .hover-lift {
+    @apply hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300;
+  }
+}
+
+/* Touch-friendly tap targets */
+.tap-target {
+  @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+}
+
+/* Mobile performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Prevent horizontal scroll issues */
+.prevent-horizontal-scroll {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Mobile-optimized text truncation */
+.text-truncate-mobile {
+  @apply truncate xs:text-clip;
+}
+
+/* Enhanced accessibility for mobile */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #050816;
+  }
+}
+
+/* Mobile landscape optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+  .landscape-optimize {
+    height: 80vh;
+  }
+}
+
+/* Mobile-specific print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-optimize {
+    color: black !important;
+    background: white !important;
   }
 }

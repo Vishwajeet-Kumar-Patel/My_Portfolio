@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { styles } from "../style";
 import { staggerContainer } from "../utils/motion";
+
 const SectionWrapper = (Component, idName) =>
   function HOC() {
     return (
@@ -8,10 +9,10 @@ const SectionWrapper = (Component, idName) =>
         variants={staggerContainer()}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.25 }}
-        className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+        viewport={{ once: true, amount: 0.15 }}
+        className={`${styles.padding} max-w-7xl mx-auto relative z-0 overflow-hidden`}
       >
-        <span className="has-span" id={idName}>
+        <span className="hash-span" id={idName}>
           &nbsp;
         </span>
         <Component />
