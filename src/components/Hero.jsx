@@ -23,9 +23,9 @@ const Hero = () => {
     >
       {/* Text Content */}
       <div
-        className={`${styles.paddingX} absolute inset-0 top-[80px] xs:top-[100px] sm:top-[120px] max-w-7xl mx-auto flex flex-col sm:flex-row items-start gap-3 xs:gap-4 sm:gap-5`}
+        className={`${styles.paddingX} absolute inset-0 top-[80px] xs:top-[100px] sm:top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-3 xs:gap-4 sm:gap-5`}
       >
-        <div className="flex flex-col justify-center items-center mt-3 xs:mt-4 sm:mt-5">
+        <div className="flex flex-col justify-center items-center mt-3 xs:mt-4 sm:mt-5 flex-shrink-0">
           <div className="w-4 h-4 xs:w-5 xs:h-5 rounded-full bg-[#915eff]" />
           <div className="w-1 h-20 xs:h-32 sm:h-40 md:h-60 lg:h-80 violet-gradient" />
         </div>
@@ -34,7 +34,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <h1 className={`${styles.heroHeadText} max-w-4xl`}>
             Hello, I'm{" "}
