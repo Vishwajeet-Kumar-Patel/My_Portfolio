@@ -66,41 +66,104 @@ THREE.BufferGeometry.prototype.computeBoundingSphere = function() {
     // Check if position attribute exists and has valid data
     const position = this.attributes.position;
     if (position && position.array) {
-      // More thorough check for NaN values
-      let hasNaN = false;
+      // Comprehensive check for invalid values
+      let hasInvalidValues = false;
       const array = position.array;
       
-      // Check all values, not just first few
-      for (let i = 0; i < array.length; i++) {
-        if (!isFinite(array[i])) {
-          hasNaN = true;
-          // Fix the NaN value immediately
-          array[i] = 0;
+      // First, do a quick sample check for performance
+      const sampleSize = Math.min(100, array.length);
+      for (let i = 0; i < sampleSize; i += 3) {
+        const x = array[i];
+        const y = array[i + 1];
+        const z = array[i + 2];
+        if (!isFinite(x) || !isFinite(y) || !isFinite(z) || 
+            isNaN(x) || isNaN(y) || isNaN(z)) {
+          hasInvalidValues = true;
+          break;
         }
       }
       
-      if (hasNaN) {
-        console.warn('Fixed NaN values in position attribute before bounding sphere computation');
-        position.needsUpdate = true;
+      // If sample found issues, check and fix ALL values
+      if (hasInvalidValues) {
+        console.warn('Comprehensive geometry repair needed, fixing all values...');
+        let fixedCount = 0;
         
-        // Set safe default bounding sphere immediately
+        for (let i = 0; i < array.length; i += 3) {
+          const x = array[i];
+          const y = array[i + 1];
+          const z = array[i + 2];
+          
+          if (!isFinite(x) || isNaN(x)) {
+            array[i] = 0;
+            fixedCount++;
+          }
+          if (!isFinite(y) || isNaN(y)) {
+            array[i + 1] = 0;
+            fixedCount++;
+          }
+          if (!isFinite(z) || isNaN(z)) {
+            array[i + 2] = 0;
+            fixedCount++;
+          }
+        }
+        
+        if (fixedCount > 0) {
+          console.warn(`Fixed ${fixedCount} invalid position values`);
+          position.needsUpdate = true;
+        }
+        
+        // Create safe manual bounding sphere
+        let minX = Infinity, minY = Infinity, minZ = Infinity;
+        let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+        
+        for (let i = 0; i < array.length; i += 3) {
+          const x = array[i];
+          const y = array[i + 1];
+          const z = array[i + 2];
+          
+          minX = Math.min(minX, x);
+          maxX = Math.max(maxX, x);
+          minY = Math.min(minY, y);
+          maxY = Math.max(maxY, y);
+          minZ = Math.min(minZ, z);
+          maxZ = Math.max(maxZ, z);
+        }
+        
+        const centerX = (minX + maxX) * 0.5;
+        const centerY = (minY + maxY) * 0.5;
+        const centerZ = (minZ + maxZ) * 0.5;
+        const radius = Math.max(
+          Math.sqrt((maxX - centerX) ** 2 + (maxY - centerY) ** 2 + (maxZ - centerZ) ** 2),
+          0.1
+        );
+        
         if (!this.boundingSphere) {
           this.boundingSphere = new THREE.Sphere();
         }
-        this.boundingSphere.center.set(0, 0, 0);
-        this.boundingSphere.radius = 1;
+        this.boundingSphere.center.set(centerX, centerY, centerZ);
+        this.boundingSphere.radius = radius;
         return;
       }
     }
     
-    // Call original method if data is safe
+    // Call original method if data appears safe
     const result = originalComputeBoundingSphere.call(this);
     
-    // Additional safety check after computation
-    if (this.boundingSphere && (!isFinite(this.boundingSphere.radius) || isNaN(this.boundingSphere.radius))) {
-      console.warn('Detected NaN radius after computation, fixing...');
-      this.boundingSphere.radius = 1;
-      this.boundingSphere.center.set(0, 0, 0);
+    // Validate result after computation
+    if (this.boundingSphere) {
+      const radius = this.boundingSphere.radius;
+      const center = this.boundingSphere.center;
+      
+      if (!isFinite(radius) || isNaN(radius) || radius <= 0) {
+        console.warn('Detected invalid radius after computation, fixing...');
+        this.boundingSphere.radius = 1;
+      }
+      
+      if (!center || !isFinite(center.x) || !isFinite(center.y) || !isFinite(center.z) ||
+          isNaN(center.x) || isNaN(center.y) || isNaN(center.z)) {
+        console.warn('Detected invalid center after computation, fixing...');
+        this.boundingSphere.center.set(0, 0, 0);
+      }
     }
     
     return result;

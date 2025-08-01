@@ -29,6 +29,106 @@ const DeveloperModel = ({ isMobile }) => {
     return () => clearTimeout(timer);
   }, [scene, error, isProcessing]);
 
+  // Additional scene processing to fix any geometry issues
+  useEffect(() => {
+    if (scene) {
+      try {
+        scene.traverse((child) => {
+          if (child.isMesh) {
+            // Ensure proper materials
+            if (child.material) {
+              child.material.side = 2; // DoubleSide to prevent face culling issues
+              child.material.needsUpdate = true;
+            }
+            
+            // Comprehensive geometry validation
+            if (child.geometry) {
+              const geometry = child.geometry;
+              
+              // Force recompute bounds with safety checks
+              try {
+                geometry.boundingSphere = null;
+                geometry.boundingBox = null;
+                
+                // Validate position attribute before bounds computation
+                if (geometry.attributes.position) {
+                  const posArray = geometry.attributes.position.array;
+                  let hasInvalidValues = false;
+                  
+                  for (let i = 0; i < posArray.length; i++) {
+                    if (!isFinite(posArray[i]) || isNaN(posArray[i])) {
+                      posArray[i] = 0;
+                      hasInvalidValues = true;
+                    }
+                  }
+                  
+                  if (hasInvalidValues) {
+                    geometry.attributes.position.needsUpdate = true;
+                    console.warn(`Fixed position values in robot mesh: ${child.name || 'unnamed'}`);
+                  }
+                }
+                
+                // Safe bounds computation
+                geometry.computeBoundingSphere();
+                
+                // Validate computed bounds
+                if (!geometry.boundingSphere || 
+                    !isFinite(geometry.boundingSphere.radius) ||
+                    isNaN(geometry.boundingSphere.radius)) {
+                  geometry.boundingSphere = {
+                    center: { x: 0, y: 0, z: 0 },
+                    radius: 1,
+                    isSphere: true
+                  };
+                  console.warn(`Created safe bounding sphere for: ${child.name || 'unnamed'}`);
+                }
+              } catch (boundsError) {
+                console.warn(`Bounds computation failed for ${child.name || 'unnamed'}, using defaults:`, boundsError);
+                geometry.boundingSphere = {
+                  center: { x: 0, y: 0, z: 0 },
+                  radius: 1,
+                  isSphere: true
+                };
+              }
+            }
+            
+            // Fix any skeleton issues for robot animations
+            if (child.skeleton) {
+              try {
+                child.skeleton.bones.forEach(bone => {
+                  if (bone.position) {
+                    // Ensure bone positions are valid
+                    if (!isFinite(bone.position.x) || isNaN(bone.position.x)) bone.position.x = 0;
+                    if (!isFinite(bone.position.y) || isNaN(bone.position.y)) bone.position.y = 0;
+                    if (!isFinite(bone.position.z) || isNaN(bone.position.z)) bone.position.z = 0;
+                  }
+                  if (bone.rotation) {
+                    if (!isFinite(bone.rotation.x) || isNaN(bone.rotation.x)) bone.rotation.x = 0;
+                    if (!isFinite(bone.rotation.y) || isNaN(bone.rotation.y)) bone.rotation.y = 0;
+                    if (!isFinite(bone.rotation.z) || isNaN(bone.rotation.z)) bone.rotation.z = 0;
+                  }
+                  if (bone.scale) {
+                    if (!isFinite(bone.scale.x) || isNaN(bone.scale.x)) bone.scale.x = 1;
+                    if (!isFinite(bone.scale.y) || isNaN(bone.scale.y)) bone.scale.y = 1;
+                    if (!isFinite(bone.scale.z) || isNaN(bone.scale.z)) bone.scale.z = 1;
+                  }
+                });
+                
+                // Recalculate skeleton after fixes
+                child.skeleton.calculateInverses();
+              } catch (skeletonError) {
+                console.warn(`Skeleton repair failed for ${child.name || 'unnamed'}:`, skeletonError);
+              }
+            }
+          }
+        });
+        console.log('Robot scene processing completed successfully');
+      } catch (processingError) {
+        console.error('Error during robot scene processing:', processingError);
+      }
+    }
+  }, [scene]);
+
   // Show nothing if there's an error, timeout, or still processing
   if (!scene || error || hasTimeout || isProcessing) {
     if (error) {
@@ -69,7 +169,7 @@ const DeveloperModel = ({ isMobile }) => {
 const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [webglError, setWebglError] = useState(false);
-  const { threeDEnabled, reportError } = useThreeD();
+  const { threeDEnabled, reportError, errorCount } = useThreeD();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 500px)");
@@ -79,21 +179,23 @@ const ComputersCanvas = () => {
     return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
   }, []);
 
-  // Handle WebGL context loss
+  // Handle WebGL context loss with better recovery
   const handleWebGLContextLost = (event) => {
-    console.warn("WebGL context lost, preventing default and attempting recovery");
+    console.warn("WebGL context lost in Computers canvas, preventing default and attempting recovery");
     event.preventDefault();
     setWebglError(true);
     reportError();
     
-    // Attempt to recover after a delay
+    // Attempt to recover after a delay with exponential backoff
+    const recoveryDelay = Math.min(2000 * Math.pow(2, Math.min(3, errorCount)), 10000);
     setTimeout(() => {
+      console.log(`Attempting WebGL context recovery after ${recoveryDelay}ms delay`);
       setWebglError(false);
-    }, 2000);
+    }, recoveryDelay);
   };
 
   const handleWebGLContextRestored = () => {
-    console.log("WebGL context restored");
+    console.log("WebGL context restored in Computers canvas");
     setWebglError(false);
   };
 
@@ -101,6 +203,18 @@ const ComputersCanvas = () => {
     console.error("Canvas error:", error);
     reportError();
     setWebglError(true);
+    
+    // Auto-recovery for certain error types
+    if (error.message && (
+      error.message.includes("WebGL") || 
+      error.message.includes("context") ||
+      error.message.includes("lost")
+    )) {
+      setTimeout(() => {
+        console.log("Attempting auto-recovery from WebGL error");
+        setWebglError(false);
+      }, 3000);
+    }
   };
 
   // If 3D is disabled globally or WebGL has issues, show a fallback

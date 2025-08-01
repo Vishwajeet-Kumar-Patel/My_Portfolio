@@ -11,6 +11,20 @@ const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
   const meshRef = React.useRef();
   const [geometry, setGeometry] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
+  }, []);
 
   // Create and sanitize geometry
   useEffect(() => {
@@ -31,9 +45,19 @@ const Ball = (props) => {
 
   return (
     <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[0, 0, 0.25]} intensity={0.75} />
-      <mesh ref={meshRef} castShadow receiveShadow scale={2.75} geometry={geometry}>
+      <ambientLight intensity={isMobile ? 0.6 : 0.4} />
+      <directionalLight 
+        position={[0, 0, 0.25]} 
+        intensity={isMobile ? 0.4 : 0.6} 
+        castShadow={!isMobile}
+      />
+      <mesh 
+        ref={meshRef} 
+        castShadow={!isMobile} 
+        receiveShadow={!isMobile} 
+        scale={2.75} 
+        geometry={geometry}
+      >
         <meshStandardMaterial
           color="#fff8eb"
           polygonOffset
@@ -53,7 +77,21 @@ const Ball = (props) => {
 
 const BallCanvas = ({ icon }) => {
   const [hasError, setHasError] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { threeDEnabled, reportError } = useThreeD();
+
+  useEffect(() => {
+    // Check if device is mobile
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
+  }, []);
 
   const handleCanvasError = (error) => {
     console.error("Ball Canvas error:", error);
@@ -120,14 +158,32 @@ const BallCanvas = ({ icon }) => {
         frameloop="demand" 
         gl={{ 
           preserveDrawingBuffer: true,
-          antialias: true,
-          alpha: true
+          antialias: !isMobile, // Disable antialiasing on mobile for better performance
+          alpha: false,
+          premultipliedAlpha: false,
+          powerPreference: isMobile ? "default" : "high-performance",
+          failIfMajorPerformanceCaveat: false
+        }}
+        dpr={isMobile ? [1, 1] : [1, 2]} // Lower DPR on mobile
+        camera={{
+          fov: 75,
+          near: 0.1,
+          far: 200,
+          position: [0, 0, 5]
         }}
         onError={handleCanvasError}
         onCreated={(state) => {
           // Additional safety check
           if (!state.gl) {
             handleCanvasError(new Error("WebGL context not available"));
+          }
+          // Set clear color to transparent black for mobile compatibility
+          state.gl.setClearColor(0x000000, 0);
+          
+          // Mobile-specific optimizations
+          if (isMobile) {
+            // Reduce shadow map size on mobile
+            state.gl.shadowMap.enabled = false;
           }
         }}
       >
