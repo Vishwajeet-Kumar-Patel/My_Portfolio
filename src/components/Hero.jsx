@@ -54,17 +54,17 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="absolute inset-0 w-full h-full flex justify-center items-center"
         >
-          <div className="w-full h-full max-w-4xl">
+          <div className="w-full h-full max-w-2xl xs:max-w-3xl sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mt-16 xs:mt-20 sm:mt-8 md:mt-4 lg:mt-0">
             <ComputersCanvas />
           </div>
         </motion.div>
       )}
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 xs:bottom-10 sm:bottom-12 w-full flex justify-center items-center">
+      <div className="absolute bottom-16 xs:bottom-20 sm:bottom-24 md:bottom-28 lg:bottom-32 w-full flex justify-center items-center">
         <a href="#about">
           <div className="w-[30px] h-[50px] xs:w-[35px] xs:h-[60px] sm:w-[35px] sm:h-[64px] rounded-3xl border-2 xs:border-3 sm:border-4 border-secondary flex justify-center items-start p-1 xs:p-1.5 sm:p-2">
             <motion.div

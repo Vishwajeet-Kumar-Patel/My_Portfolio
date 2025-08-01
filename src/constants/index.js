@@ -5,7 +5,6 @@ import {
   trackwell,
   creator,
   css,
-  figma,
   git,
   gameaware,
   html,
@@ -22,18 +21,21 @@ import {
   threejs,
   tripguide,
   typescript,
-  web,
+  web, // Still needed for services
+  mindware, // New project
+  // Additional tech imports
+  springboot,
+  postman,
+  canva,
+  nextjs,
+  postgres,
 } from "../assets";
-import kotlin from "../assets/tech/springboot.png";
-import postman from "../assets/tech/postman.png";
 import sorting from "../assets/sorting.png";
 import social from "../assets/social.png";
 import resume from "../assets/resume.png";
 import parcare from "../assets/parcare.png";
 import education from "../assets/education.png";
 import work from "../assets/work.png";
-import mysql from "../assets/tech/mysql.png";
-import canva from "../assets/tech/canva.png";
 
 export const navLinks = [
   {
@@ -83,14 +85,21 @@ const technologies = [
     icon: javascript,
   },
   {
-    name: "SpringBoot",
+    name: "TypeScript",
     icon: typescript,
   },
   {
     name: "React JS",
     icon: reactjs,
   },
-
+  {
+    name: "Next JS",
+    icon: nextjs,
+  },
+  {
+    name: "Redux Toolkit",
+    icon: redux,
+  },
   {
     name: "Tailwind CSS",
     icon: tailwind,
@@ -103,27 +112,29 @@ const technologies = [
     name: "MongoDB",
     icon: mongodb,
   },
-
   {
-    name: "git",
+    name: "PostgreSQL",
+    icon: postgres,
+  },
+  {
+    name: "Three JS",
+    icon: threejs,
+  },
+  {
+    name: "Git",
     icon: git,
   },
   {
-    name: "canva",
-    icon: canva,
+    name: "Spring Boot",
+    icon: springboot,
   },
   {
-    name: "postman",
+    name: "Postman",
     icon: postman,
   },
   {
-    name: "kotlin",
-    icon: kotlin,
-  },
-
-  {
-    name: "mysql",
-    icon: mysql,
+    name: "Canva",
+    icon: canva,
   },
 ];
 
@@ -194,6 +205,31 @@ const testimonials = [
 ];
 
 const projects = [
+  {
+    name: "Mindware",
+    description:
+      "A comprehensive MERN stack web application focused on mental health assessment, providing users with tools to evaluate and track their mental wellness through interactive questionnaires and personalized insights.",
+    tags: [
+      {
+        name: "React",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Node.js",
+        color: "green-text-gradient",
+      },
+      {
+        name: "MongoDB",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "Express",
+        color: "blue-text-gradient",
+      },
+    ],
+    image: mindware,
+    source_code_link: "https://github.com/Vishwajeet-Kumar-Patel/Mindware",
+  },
   {
     name: "TrackWell",
     description:
