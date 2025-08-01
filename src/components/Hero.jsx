@@ -43,8 +43,8 @@ const Hero = () => {
             </span>
           </h1>
           <p className={`${styles.heroSubText} mt-3 xs:mt-4 max-w-xl xs:max-w-2xl sm:max-w-3xl`}>
-            I design & build modern full stack web applications and craft smart
-            machine learning solutions that solve real-world problems.
+            I design & build modern full stack web applications and craft smart machine learning solutions that 
+            solve real-world problems.
           </p>
         </motion.div>
       </div>

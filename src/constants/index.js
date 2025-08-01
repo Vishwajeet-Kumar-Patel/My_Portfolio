@@ -208,7 +208,7 @@ const projects = [
   {
     name: "Mindware",
     description:
-      "A comprehensive MERN stack web application focused on mental health assessment, providing users with tools to evaluate and track their mental wellness through interactive questionnaires and personalized insights.",
+      "MERN stack web app focused on mental health assessment, providing users with tools to evaluate and track their mental wellness.",
     tags: [
       {
         name: "React",
