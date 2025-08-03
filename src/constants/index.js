@@ -36,6 +36,7 @@ import resume from "../assets/resume.png";
 import parcare from "../assets/parcare.png";
 import education from "../assets/education.png";
 import work from "../assets/work.png";
+import resumeranker from "../assets/resumeranker.png";
 
 export const navLinks = [
   {
@@ -148,20 +149,6 @@ const experiences = [
     points: ["Computer Science and Engineering with specialisation in Artificial Intelligence"],
   },
   {
-    title: "Full Stack Intern",
-    company_name: "Bharat Intern",
-    icon: work,
-    iconBg: "#E6DEDD",
-    date: "August 2023 - September 2023",
-    points: [
-      "Developed and maintained responsive web applications using MERN stack, ensuring seamless user experience across devices",
-      "Engineered RESTful APIs with Node.js and Express, optimizing server performance and enabling smooth data communication between frontend and backend",
-      "Implemented secure user authentication and authorization using JWT and OAuth, enhancing application security and access control",
-      "Improved application performance by 35% through efficient state management using React Context API and optimized component rendering",
-      "Collaborated in an agile environment using Git, GitHub, and Trello, contributing to clean, modular, and maintainable codebases while meeting tight deadlines",
-    ],
-  },
-  {
   title: "Cyber Security Intern",
   company_name: "CybarGyan, C-DAC Noida",
   icon: work,
@@ -174,7 +161,21 @@ const experiences = [
     "Implemented firewall rules, intrusion detection systems, and log analysis to monitor and secure network traffic.",
     "Prepared a detailed project report and gave a final presentation highlighting security solutions and mitigation strategies implemented during the internship."
   ],
-}
+},
+{
+    title: "Software Developer Intern",
+    company_name: "StuFit Approach Private Limited",
+    icon: work,
+    iconBg: "#E6DEDD",
+    date: "July 2025 - Ongoing",
+    points: [
+      "Developed and maintained responsive web applications using Next.js frontend with server-side rendering, ensuring optimal performance and seamless user experience across devices",
+      "Engineered scalable RESTful APIs with NestJS backend framework, leveraging TypeScript decorators and dependency injection for robust server architecture and efficient data communication",
+      "Implemented secure user authentication and role-based authorization using JWT, OAuth, and CASL (Code Access Security Layer), enhancing application security with fine-grained access control",
+      "Optimized database operations using PostgreSQL with Prisma ORM, implementing efficient queries and database schema design that improved application performance by 35%",
+      "Collaborated in an agile environment using Git, GitHub, and project management tools, contributing to clean, type-safe, and maintainable codebases while meeting tight deadlines",
+    ],
+  },
 ];
 
 const testimonials = [
@@ -208,7 +209,7 @@ const projects = [
   {
     name: "Mindware",
     description:
-      "MERN stack web app focused on mental health assessment, providing users with tools to evaluate and track their mental wellness.",
+      "MERN stack web application focused on mental health assessment and wellness tracking, providing users with comprehensive tools to evaluate psychological well-being and personalized mental health insights.",
     tags: [
       {
         name: "React",
@@ -233,7 +234,7 @@ const projects = [
   {
     name: "TrackWell",
     description:
-      "TrackWell is a full-stack fitness tracker web app built using the MERN stack, designed to help users monitor workouts.",
+      "TrackWell is a comprehensive full-stack fitness tracker web application built using the MERN stack, designed to help users monitor workouts and achieve their fitness goals effectively.",
     tags: [
       {
         name: "React",
@@ -252,9 +253,34 @@ const projects = [
     source_code_link: "https://github.com/Vishwajeet-Kumar-Patel/TrackWell",
   },
   {
+    name: "Resume Ranker",
+    description:
+      "MERN stack web application designed to analyze and rank resumes, providing AI-driven career recommendations and personalized skill-based roadmaps to help users improve their job prospects.",
+    tags: [
+      {
+        name: "React",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "MongoDB",
+        color: "green-text-gradient",
+      },
+      {
+        name: "Node.js",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "Express",
+        color: "blue-text-gradient",
+      },
+    ],
+    image: resumeranker,
+    source_code_link: "https://github.com/Vishwajeet-Kumar-Patel/Resume_Scorer",
+  },
+  {
     name: "GameAware",
     description:
-      "Web application to educate people about the difference between Gaming and Gambling.",
+      "Educational web application designed to raise awareness about gaming and gambling differences, providing users with comprehensive information and resources to promote responsible gaming habits.",
     tags: [
       {
         name: "React",
@@ -276,7 +302,7 @@ const projects = [
   {
     name: "Vishwajeet's Blog",
     description:
-      "A comprehensive web application that allows users to share and read blogs with all the trendy features.",
+      "A comprehensive full-stack blog platform built with modern web technologies, enabling users to create, share, and discover engaging content with advanced features and intuitive user experience.",
     tags: [
       {
         name: "React",
@@ -295,31 +321,6 @@ const projects = [
     source_code_link:
       "https://github.com/Vishwajeet-Kumar-Patel/Blog",
   },
-  /*{
-    name: "PARCARE",
-    description:
-      "Positive and engaging user experience design. The main goal of app is ease parking and save user's time by collaborating with private parking areas.",
-    tags: [
-      {
-        name: "UI/UX",
-        color: "pink-text-gradient",
-      },
-      {
-        name: "figma",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "inkscape",
-        color: "green-text-gradient",
-      },
-      {
-        name: "coolers",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: parcare,
-    source_code_link: "https://www.behance.net/gallery/207227903/PARCARE",
-  },*/
 ];
 
 export { experiences, projects, services, technologies, testimonials };
