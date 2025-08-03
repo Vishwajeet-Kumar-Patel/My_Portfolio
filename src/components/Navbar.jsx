@@ -66,7 +66,7 @@ const Navbar = () => {
           {/* Resume Button Desktop */}
           <li>
             <a
-              href="/Vishwajeet_Resume.pdf"
+              href="/Vishwajeet_Kumar_Resume.pdf"
               download
               target="_blank"
               rel="noopener noreferrer"
@@ -110,7 +110,7 @@ const Navbar = () => {
               {/* Resume Button Mobile */}
               <li>
                 <a
-                  href="/Vishwajeet_Resume.pdf"
+                  href="/Vishwajeet_Kumar_Resume.pdf"
                   download
                   target="_blank"
                   rel="noopener noreferrer"
