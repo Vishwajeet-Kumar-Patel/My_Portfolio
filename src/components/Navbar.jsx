@@ -29,7 +29,7 @@ const Navbar = () => {
     <nav
       className={`${
         styles.paddingX
-      } w-full flex items-center py-3 xs:py-4 sm:py-5 fixed top-0 z-20 transition-all duration-300 ${
+      } w-full flex items-center py-3 xs:py-4 sm:py-5 fixed top-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-primary backdrop-blur-sm" : "bg-transparent"
       }`}
     >
@@ -89,7 +89,7 @@ const Navbar = () => {
           <div
             className={`${
               !toggle ? "hidden" : "flex"
-            } p-4 xs:p-6 black-gradient absolute top-16 xs:top-20 right-0 mx-2 xs:mx-4 my-2 min-w-[140px] xs:min-w-[160px] z-10 rounded-xl shadow-lg`}
+            } p-4 xs:p-6 black-gradient absolute top-16 xs:top-20 right-0 mx-2 xs:mx-4 my-2 min-w-[140px] xs:min-w-[160px] z-50 rounded-xl shadow-lg`}
           >
             <ul className="list-none flex justify-end items-start flex-1 flex-col gap-3 xs:gap-4">
               {navLinks.map((nav) => (
@@ -110,7 +110,7 @@ const Navbar = () => {
               {/* Resume Button Mobile */}
               <li>
                 <a
-                  href="/Vishwajeet_Kumar_Resume.pdf"
+                  href="Vishwajeet_Kumar_Resume.pdf"
                   download
                   target="_blank"
                   rel="noopener noreferrer"

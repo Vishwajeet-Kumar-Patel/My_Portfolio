@@ -37,9 +37,7 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-3 xs:mt-4 text-secondary text-[15px] xs:text-[16px] sm:text-[17px] max-w-full sm:max-w-3xl leading-[24px] xs:leading-[28px] sm:leading-[30px]"
       >
-        Hi! I'm a self-driven undergraduate student with a strong passion for full-stack development, AI/ML, and game development. I work extensively with the MERN stack and Spring Boot, and I've built projects like TrackWell (a fitness tracker), KrishiConnect (an agri-tech platform), and an AI Code Auto-Completion tool.
-        I'm also exploring game development using Unity and C#, while staying curious about emerging technologies like Generative AI, Quantum Machine Learning, Swarm Intelligence, and Edge AI.
-        I love building meaningful, scalable tech products and constantly push myself to learn, create, and innovate.
+        Self-driven Computer Science undergraduate specializing in full-stack development, AI/ML, and game development. Proficient in the MERN stack and Spring Boot, with projects including TrackWell (fitness tracker), KrishiConnect (agri-tech platform), Resume Ranker (career and roadmap recommender), and EduIntel (AI learning platform). Skilled in Unity (C#) and passionate about emerging technologies like Generative AI, Quantum Machine Learning, Swarm Intelligence, and Edge AI.
       </motion.p>
       <div className="mt-12 xs:mt-16 sm:mt-20 flex flex-wrap justify-center gap-6 xs:gap-8 sm:gap-10">
         {services.map((service, index) => (
